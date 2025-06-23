@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My GPT-2 AI</title>
+</head>
+<body style="font-family:sans-serif;text-align:center;padding:40px;">
+  <h1>💬 Ask My AI</h1>
+  <input type="text" id="question" placeholder="Type your question..." style="width:300px;padding:10px;" />
+  <button onclick="ask()" style="padding:10px 20px;">Ask</button>
+  <pre id="response" style="margin-top:20px;font-size:16px;"></pre>
+
+  <script>
+    async function ask() {
+      const question = document.getElementById("question").value;
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = data.answer || data.error;
+    }
+  </script>
+</body>
+</html>
